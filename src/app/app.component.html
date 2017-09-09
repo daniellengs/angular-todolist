@@ -1,7 +1,50 @@
 <app-navbar></app-navbar>
 
 <div class="container">
+  <div class="row">
+    <div class="col-md mb-2">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-list-ul" aria-hidden="true"></i>
+          Tasks
+          <button class="btn btn-sm btn-outline-secondary float-right" (click)="showNewTaskForm()">New Task</button></div>
+        <div class="card-body">
 
+          <ul class="list-group">
+            <li *ngFor="let task of tasks" class="list-group-item">{{task}}</li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showCreate" class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+          Create new Task
+        </div>
+        <div class="card-body">
+              <div class="form-group">
+                <label>Title</label>
+                <input class="form-control" type="text" #inputName />
+              </div>
+              <button
+                (click)="createTask(inputName.value)"
+                class="btn btn-sm btn-outline-secondary float-right">
+                Add Task
+              </button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showEdit" class="col-md-4">
+      <div class="card">
+        <div class="card-header">Edit Task</div>
+        <div class="card-body">
+          <p class="card-text">Edit Task Form</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <app-footer></app-footer>
