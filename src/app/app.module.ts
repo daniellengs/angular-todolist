@@ -5,9 +5,9 @@ import { RouterModule }   from '@angular/router';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { TaskListComponent } from './task-list/task-list.component';
+import { TaskListComponent } from './tasks/task-list/task-list.component';
 import { TasksComponent } from './tasks/tasks.component';
-import { TaskComponent } from './task/task.component';
+import { TaskComponent } from './tasks/task/task.component';
 import { AboutComponent } from './about/about.component';
 
 @NgModule({
