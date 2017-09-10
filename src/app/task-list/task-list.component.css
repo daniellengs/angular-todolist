@@ -1,0 +1,11 @@
+.bg-pending {
+  background-color: #FDFDFD;
+}
+
+.bg-completed {
+  background-color: #ccf4c3;
+}
+
+.bg-ongoing {
+  background-color: #f4f4c3;
+}

@@ -1,0 +1,9 @@
+.floating-alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin-top: 55px;
+  z-index: 1000;
+  text-align: center;
+}
