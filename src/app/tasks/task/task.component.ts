@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 import { Task } from '../task.model';
+import { TasksService } from '../tasks.service';
 
 @Component({
   selector: 'app-task',
@@ -8,7 +10,7 @@ import { Task } from '../task.model';
 })
 export class TaskComponent implements OnInit {
 
-  constructor() { }
+  constructor(private tasksService :TasksService) { }
 
   ngOnInit() {
   }
@@ -22,10 +24,16 @@ export class TaskComponent implements OnInit {
 
   startTask() {
     this.task.status = "ongoing";
+    this.updateTask();
   }
 
   finishTask() {
     this.task.status = "completed";
+    this.updateTask();
+  }
+
+  updateTask() {
+    this.tasksService.updateTask(this.task).subscribe();
   }
 
 }

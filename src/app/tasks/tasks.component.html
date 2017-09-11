@@ -1,9 +1,14 @@
-<div *ngIf="showConfirmAlert" class="alert alert-success floating-alert" role="alert">
+<!-- NOTIFICATIONS -->
+<div *ngIf="showGreenAlert" class="alert alert-success floating-alert" role="alert">
+  {{alertText}}
+</div>
+<div *ngIf="showRedAlert" class="alert alert-error floating-alert" role="alert">
   {{alertText}}
 </div>
 
 <div class="row">
 
+  <!-- CREATE TASK FORM -->
   <div *ngIf="showCreate" class="col-md-4 mb-2">
     <div class="card">
       <div class="card-header">
@@ -28,21 +33,31 @@
       </div>
     </div>
   </div>
-  <div *ngIf="showEdit" class="col-md-4 mb-2">
+
+  <!-- LIST OF TASKS -->
+  <div class="col-md mb-2">
     <div class="card">
-      <div class="card-header">Edit Task</div>
+      <div class="card-header">
+        <i class="fa fa-list-ul" aria-hidden="true"></i>
+        Tasks
+        <button class="btn btn-sm btn-outline-secondary float-right" (click)="showNewTaskForm()">New Task</button></div>
       <div class="card-body">
-        <p class="card-text">Edit Task Form</p>
+        <div *ngIf="loading" class="text-center">
+          <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+        </div>
+        <ul class="list-group">
+          <li *ngFor="let task of tasks"
+            [class.bg-pending]="task.status == 'pending'"
+            [class.bg-ongoing]="task.status == 'ongoing'"
+            [class.bg-completed]="task.status == 'completed'"
+            class="list-group-item">
+            <app-task
+              [task]="task"
+              (onRemoveTask)="removeTask(task)">
+            </app-task>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
-
-  <div class="col-md mb-2">
-    <app-task-list
-      (onRemoveTask)="removeTask(value)"
-      (showNewTask)="showNewTaskForm()"
-      [tasks]="tasks">
-    </app-task-list>
-  </div>
-
 </div>

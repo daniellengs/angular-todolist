@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from './task.model';
+import { TasksService } from './tasks.service';
 
 @Component({
   selector: 'app-tasks',
@@ -8,33 +9,56 @@ import { Task } from './task.model';
 })
 export class TasksComponent implements OnInit {
 
-  constructor() { }
+  constructor(private tasksService :TasksService) { }
+
+  loading = false;
 
   ngOnInit() {
+    this.loading = true;
+    this.tasksService.getTasks().subscribe(tasks => {
+      this.tasks = tasks;
+      this.loading = false;
+    });
   }
 
-  showConfirmAlert = false;
+  tasks: Task[];
+
+  showGreenAlert = false;
+  showRedAlert = false;
   alertText = "";
 
   showCreate = false;
   showEdit = false;
 
-  t1:Task = new Task("Learn HTML");
-  t2:Task = new Task("Learn CSS");
-  t3:Task = new Task("Learn Javascript");
-  t4:Task = new Task("Learn Angular");
-
-  tasks = [this.t1, this.t2, this.t3, this.t4];
-
   createTask(title) {
     let t:Task = new Task(title);
-    this.tasks.push(t);
     this.showCreate = false;
-    this.showGreenAlert("Task created!");
+
+    this.tasksService.saveTask(t).subscribe(task => {
+      this.tasks.push(task);
+      this.showGreenNotification("Task created!");
+    }, err => {
+      this.showRedNotification("Error creating the Task");
+    });
   }
 
-  removeTask() {
-    this.showGreenAlert("Task deleted!");
+  removeTask(task) {
+    if (confirm("Are you sure?")) {
+      let index = this.tasks.findIndex(t => {
+        return (t._id === task._id);
+      });
+      this.tasks.splice(index, 1);
+
+      //Remove task from backend
+      this.tasksService.deleteTask(task)
+        .subscribe(success => {
+            this.showGreenNotification("Task deleted!");
+          }, err => {
+            this.showRedNotification("Error deleting the Task");
+            // Revert the view back to its original state
+            this.tasks.splice(index, 0, task);
+          });
+    }
   }
 
   showNewTaskForm() {
@@ -42,11 +66,19 @@ export class TasksComponent implements OnInit {
     this.showCreate = !this.showCreate;
   }
 
-  showGreenAlert(text) {
+  showGreenNotification(text) {
     this.alertText = text;
-    this.showConfirmAlert = true;
+    this.showGreenAlert = true;
     setTimeout(()=>{
-      this.showConfirmAlert = false;
+      this.showGreenAlert = false;
+    }, 1000);
+  }
+
+  showRedNotification(text) {
+    this.alertText = text;
+    this.showRedAlert = true;
+    setTimeout(()=>{
+      this.showRedAlert = false;
     }, 1000);
   }
 
