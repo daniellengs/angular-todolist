@@ -1,0 +1,16 @@
+<div>
+  <i *ngIf="task.status == 'pending'" class="fa fa-square-o" aria-hidden="true"></i>
+  <i *ngIf="task.status == 'ongoing'" class="fa fa-minus-square-o" aria-hidden="true"></i>
+  <i *ngIf="task.status == 'completed'" class="fa fa-check-square-o" aria-hidden="true"></i>
+  {{task.title}}
+
+  <a class="icon float-right" (click)="removeTask()" data-toggle="tooltip" title="Remove Task">
+    <i class="gray-icon fa fa-times" aria-hidden="true"></i>
+  </a>
+  <a *ngIf="task.status == 'pending'" class="icon float-right pr-2 pl-2" (click)="startTask()" data-toggle="tooltip" title="Start Task">
+    <i class="gray-icon fa fa-play" aria-hidden="true"></i>
+  </a>
+  <a *ngIf="task.status == 'ongoing'" class="icon float-right pr-2 pl-2" (click)="finishTask()" data-toggle="tooltip" title="Finish Task">
+    <i class="gray-icon fa fa-stop" aria-hidden="true"></i>
+  </a>
+</div>

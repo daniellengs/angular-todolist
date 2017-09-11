@@ -1,0 +1,63 @@
+<!-- NOTIFICATIONS -->
+<div *ngIf="showGreenAlert" class="alert alert-success floating-alert" role="alert">
+  {{alertText}}
+</div>
+<div *ngIf="showRedAlert" class="alert alert-error floating-alert" role="alert">
+  {{alertText}}
+</div>
+
+<div class="row">
+
+  <!-- CREATE TASK FORM -->
+  <div *ngIf="showCreate" class="col-md-4 mb-2">
+    <div class="card">
+      <div class="card-header">
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        Create new Task
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label>Title</label>
+          <input class="form-control" type="text" #inputTitle (keydown.enter)="createTask(inputTitle.value)" />
+        </div>
+        <button
+          (click)="createTask(inputTitle.value)"
+          class="btn btn-sm btn-outline-secondary float-right">
+          Add Task
+        </button>
+        <button
+          (click)="showNewTaskForm()"
+          class="btn btn-sm btn-outline-secondary float-right mr-2">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIST OF TASKS -->
+  <div class="col-md mb-2">
+    <div class="card">
+      <div class="card-header">
+        <i class="fa fa-list-ul" aria-hidden="true"></i>
+        Tasks
+        <button class="btn btn-sm btn-outline-secondary float-right" (click)="showNewTaskForm()">New Task</button></div>
+      <div class="card-body">
+        <div *ngIf="loading" class="text-center">
+          <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+        </div>
+        <ul class="list-group">
+          <li *ngFor="let task of tasks"
+            [class.bg-pending]="task.status == 'pending'"
+            [class.bg-ongoing]="task.status == 'ongoing'"
+            [class.bg-completed]="task.status == 'completed'"
+            class="list-group-item">
+            <app-task
+              [task]="task"
+              (onRemoveTask)="removeTask(task)">
+            </app-task>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
