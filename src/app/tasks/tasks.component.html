@@ -14,22 +14,22 @@
       <div class="card-header">
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
         Create new Task
+        <button
+          (click)="showNewTaskForm()"
+          class="btn btn-sm btn-outline-secondary float-right">
+          Cancel
+        </button>
       </div>
       <div class="card-body">
         <div class="form-group">
           <label>Title</label>
-          <input class="form-control" type="text" #inputTitle (keydown.enter)="createTask(inputTitle.value)" />
+          <div class="input-group">
+            <input type="text" class="form-control" #inputTitle  (keydown.enter)="createTask(inputTitle.value)">
+            <span class="input-group-btn">
+              <button class="btn btn-secondary" type="button" (click)="createTask(inputTitle.value)">Add Task</button>
+            </span>
+          </div>
         </div>
-        <button
-          (click)="createTask(inputTitle.value)"
-          class="btn btn-sm btn-outline-secondary float-right">
-          Add Task
-        </button>
-        <button
-          (click)="showNewTaskForm()"
-          class="btn btn-sm btn-outline-secondary float-right mr-2">
-          Cancel
-        </button>
       </div>
     </div>
   </div>
